@@ -6,9 +6,9 @@
 }
 
 body {
-  background: #f6f8fa;
-  font-family: "Open Sans", sans-serif;
-  color: #333;
+  background: #eafffd;
+  font-family: "Poppins", sans-serif;
+  color: #000000;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ body {
 header {
   text-align: center;
   padding: 2rem 1rem 1rem;
-  background: linear-gradient(135deg, #2a9d8f, #264653);
+  background: linear-gradient(135deg, #2a9d8f, #287271, #264653);
   color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -27,7 +27,6 @@ header {
 
 header h1 {
   font-size: 2rem;
-  font-family: "Poppins", sans-serif;
   margin-bottom: 0.5rem;
 }
 
@@ -93,23 +92,27 @@ main {
 /* Todo List */
 #todo-list {
   list-style: none;
+  border: 1px solid #e9ecef; /* Garis luar untuk kontainer list */
+  border-radius: 12px;
+  overflow: hidden; /* Memastikan border-radius diterapkan pada item di dalamnya */
 }
 
 .todo-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fdfdfd;
+  background: #fff; /* Menyamakan dengan background kontainer utama */
   padding: 0.8rem 1rem;
-  margin-bottom: 0.6rem;
-  border-radius: 12px;
-  border: 1px solid #eee;
+  border-bottom: 1px solid #e9ecef; /* Garis pemisah tipis */
   cursor: grab;
 }
 
 .todo-item.completed .text {
   text-decoration: line-through;
   color: #888;
+}
+.todo-item:last-child {
+  border-bottom: none; /* Menghilangkan garis pada item terakhir */
 }
 
 .todo-actions button {
@@ -122,7 +125,7 @@ main {
 }
 
 .todo-actions .edit {
-  color: #000; /* Menambah kontras */
+  color: #000000; /* Menambah kontras */
   background: #e9c46a;
 }
 .todo-actions .delete {
@@ -130,7 +133,7 @@ main {
   color: white;
 }
 .todo-actions .toggle {
-  color: #000; /* Menambah kontras */
+  color: #000000; /* Menambah kontras */
   background: #2a9d8f;
 }
 
@@ -143,6 +146,7 @@ footer {
   background: linear-gradient(
     135deg,
     #2a9d8f,
+    #287271,
     #264653
   ); /* Menyamakan dengan header */
   color: #f6f8fa; /* Warna terang dari latar belakang body */
