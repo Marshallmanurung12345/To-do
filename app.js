@@ -6,6 +6,13 @@ const search = document.getElementById("search");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
+// Migrasi: Tambahkan ID unik ke todo lama yang belum memilikinya
+todos.forEach((todo) => {
+  if (!todo.id) {
+    todo.id = Date.now() + Math.random();
+  }
+});
+
 // Fungsi untuk menampilkan notifikasi toast
 function showToast(message, type = "success") {
   const toastContainer = document.querySelector(".toast-container");
@@ -49,10 +56,11 @@ function renderTodos() {
   }
 
   // Buat elemen todo
-  filtered.forEach((todo, index) => {
+  filtered.forEach((todo) => {
     const li = document.createElement("li");
     li.className = `todo-item ${todo.completed ? "completed" : ""}`;
     li.draggable = true;
+    li.dataset.id = todo.id; // Tambahkan data-id untuk identifikasi
 
     li.innerHTML = `
       <span class="text">${todo.text}</span>
@@ -65,9 +73,10 @@ function renderTodos() {
 
     // Toggle selesai/belum
     li.querySelector(".toggle").addEventListener("click", () => {
-      todos[index].completed = !todos[index].completed;
+      const todoToToggle = todos.find((t) => t.id === todo.id);
+      todoToToggle.completed = !todoToToggle.completed;
       saveTodos();
-      if (todos[index].completed) {
+      if (todoToToggle.completed) {
         showToast("Tugas ditandai selesai!");
       } else {
         showToast("Tugas ditandai belum selesai.", "warning");
@@ -77,8 +86,13 @@ function renderTodos() {
     // Edit todo
     li.querySelector(".edit").addEventListener("click", () => {
       const newText = prompt("Ubah todo:", todo.text);
-      if (newText && !todos.find((t) => t.text === newText)) {
-        todos[index].text = newText;
+      if (
+        newText &&
+        newText.trim() !== "" &&
+        !todos.find((t) => t.text === newText)
+      ) {
+        const todoToEdit = todos.find((t) => t.id === todo.id);
+        todoToEdit.text = newText;
         saveTodos();
         showToast("Tugas berhasil diubah.", "info");
       } else {
@@ -92,7 +106,8 @@ function renderTodos() {
         `Apakah Anda yakin ingin menghapus tugas "${todo.text}"?`
       );
       if (confirmation) {
-        todos.splice(index, 1);
+        const todoIndex = todos.findIndex((t) => t.id === todo.id);
+        todos.splice(todoIndex, 1);
         saveTodos();
         showToast("Tugas berhasil dihapus.", "danger");
       }
@@ -100,13 +115,15 @@ function renderTodos() {
 
     // Drag & Drop
     li.addEventListener("dragstart", (e) => {
-      e.dataTransfer.setData("index", index);
+      e.dataTransfer.setData("text/plain", todo.id);
+      e.dataTransfer.effectAllowed = "move";
     });
     li.addEventListener("dragover", (e) => e.preventDefault());
     li.addEventListener("drop", (e) => {
-      const fromIndex = e.dataTransfer.getData("index");
-      const toIndex = index;
-      const [moved] = todos.splice(fromIndex, 1);
+      const fromId = e.dataTransfer.getData("text/plain");
+      const fromIndex = todos.findIndex((t) => t.id == fromId);
+      const toIndex = todos.findIndex((t) => t.id === todo.id);
+      const [moved] = todos.splice(fromIndex, 1); // Ambil item yang dipindah
       todos.splice(toIndex, 0, moved);
       saveTodos();
     });
@@ -135,7 +152,7 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  todos.push({ text, completed: false });
+  todos.push({ id: Date.now(), text, completed: false });
   input.value = ""; // Kosongkan input setelah tambah
   showToast("Tugas baru berhasil ditambahkan!");
   saveTodos(); // langsung render + simpan
