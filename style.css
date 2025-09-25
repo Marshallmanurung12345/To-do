@@ -1,0 +1,164 @@
+/* ===== General Style ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  width: 420px;
+  animation: fadeIn 0.7s ease;
+}
+
+h1 {
+  text-align: center;
+  color: #2193b0;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+/* ===== Input Section ===== */
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+#todo-input:focus {
+  outline: none;
+  border-color: #2193b0;
+  box-shadow: 0 0 5px rgba(33,147,176,0.5);
+}
+
+#add-btn {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #2193b0;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#add-btn:hover {
+  background: #17667d;
+  transform: scale(1.05);
+}
+
+/* ===== Filter & Search ===== */
+.filter-search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+#filter, #search {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* ===== Todo List ===== */
+#todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f9fa;
+  margin-bottom: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, background 0.3s ease;
+  animation: slideIn 0.4s ease;
+}
+
+.todo-item:hover {
+  background: #eef6f9;
+  transform: translateX(3px);
+}
+
+.todo-item.completed .text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.text {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ===== Actions Button ===== */
+.actions button {
+  border: none;
+  margin-left: 5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.actions .edit {
+  background: #ff9800;
+  color: white;
+}
+.actions .edit:hover {
+  background: #e68900;
+}
+
+.actions .delete {
+  background: #f44336;
+  color: white;
+}
+.actions .delete:hover {
+  background: #d32f2f;
+}
+
+.actions .toggle {
+  background: #4caf50;
+  color: white;
+}
+.actions .toggle:hover {
+  background: #3c8c40;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
