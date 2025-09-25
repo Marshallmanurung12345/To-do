@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App - Elegant Version</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="vendor/bootstrap-5.3.7/package/dist/css/bootstrap.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" type="image/png" href="assets/logo.jpg" />
   </head>
   <body>
     <header>
       <h1>📋 My Todo List</h1>
-      <p>Kelola aktivitasmu dengan mudah dan rapi</p>
+      <p>Sederhanakan hidup, atur prioritasmu dengan lebih rapi.</p>
     </header>
 
     <main>
@@ -50,6 +61,11 @@
       </div>
     </footer>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <!-- Toast akan muncul di sini -->
+    </div>
+
     <script src="app.js"></script>
+    <script src="vendor/bootstrap-5.3.7/package/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
