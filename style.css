@@ -1,165 +1,174 @@
-/* ===== General Style ===== */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #f4f6f9;
+/* Reset */
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  color: #2c3e50;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
-.container {
-  background: #ffffff;
-  margin-top: 60px;
-  padding: 35px 40px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  width: 450px;
-  animation: fadeIn 0.6s ease;
+body {
+  background: #f6f8fa;
+  color: #333;
+  line-height: 1.6;
 }
 
-h1 {
+/* Header */
+header {
   text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 25px;
-  color: #2c3e50;
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(135deg, #2a9d8f, #264653);
+  color: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
-/* ===== Input Section ===== */
-.input-section {
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Container */
+.todo-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Form */
+#todo-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
-#todo-input {
+#todo-form input {
   flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  font-size: 14px;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
-#todo-input:focus {
-  outline: none;
-  border-color: #2980b9;
-  box-shadow: 0 0 5px rgba(41,128,185,0.3);
-}
-
-#add-btn {
-  padding: 12px 18px;
+#todo-form button {
+  padding: 0.8rem 1.2rem;
+  background: #2a9d8f;
   border: none;
-  border-radius: 8px;
-  background: #2980b9;
   color: white;
-  font-weight: 500;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s;
 }
 
-#add-btn:hover {
-  background: #226997;
+#todo-form button:hover {
+  background: #21867a;
 }
 
-/* ===== Filter & Search ===== */
-.filter-search {
+/* Controls */
+.controls {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
   gap: 10px;
+  margin-bottom: 1rem;
 }
 
-#filter, #search {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  font-size: 14px;
+.controls select,
+.controls input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
-/* ===== Todo List ===== */
+/* Todo List */
 #todo-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .todo-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fafafa;
-  margin-bottom: 10px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  background: #fdfdfd;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  border-radius: 12px;
+  border: 1px solid #eee;
   cursor: grab;
-  transition: transform 0.2s ease, background 0.2s ease;
-  animation: slideIn 0.4s ease;
-}
-
-.todo-item:hover {
-  background: #f0f4f8;
-  transform: translateX(3px);
 }
 
 .todo-item.completed .text {
   text-decoration: line-through;
-  color: #7f8c8d;
+  color: #888;
 }
 
-.text {
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* ===== Actions Button ===== */
-.actions button {
-  border: none;
+.todo-actions button {
   margin-left: 6px;
-  padding: 6px 12px;
+  padding: 0.4rem 1rem;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-size: 0.85rem;
 }
 
-.actions .edit {
-  background: #f39c12;
+.todo-actions .edit {
+  background: #e9c46a;
+}
+.todo-actions .delete {
+  background: #e76f51;
   color: white;
 }
-.actions .edit:hover {
-  background: #d68910;
-}
-
-.actions .delete {
-  background: #e74c3c;
+.todo-actions .toggle {
+  background: #2a9d8f;
   color: white;
 }
-.actions .delete:hover {
-  background: #c0392b;
+
+.todo-actions button:hover {
+  opacity: 0.85;
 }
 
-.actions .toggle {
-  background: #27ae60;
-  color: white;
-}
-.actions .toggle:hover {
-  background: #1e8449;
+/* Footer */
+footer {
+  background: linear-gradient(
+    135deg,
+    #2a9d8f,
+    #264653
+  ); /* Menyamakan dengan header */
+  color: #f6f8fa; /* Warna terang dari latar belakang body */
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem; /* Menambah jarak di atas footer */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-/* ===== Animations ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.footer-content p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #f6f8fa;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #e9c46a; /* Menggunakan warna aksen lain untuk hover */
+  text-decoration: underline;
 }

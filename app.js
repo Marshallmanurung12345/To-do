@@ -1,166 +1,113 @@
-const todoInput = document.getElementById("todo-input");
-const addBtn = document.getElementById("add-btn");
-const todoList = document.getElementById("todo-list");
+const form = document.getElementById("todo-form");
+const input = document.getElementById("todo-input");
+const list = document.getElementById("todo-list");
 const filter = document.getElementById("filter");
 const search = document.getElementById("search");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-// Simpan ke localStorage
-function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
 // Render daftar todo
 function renderTodos() {
-  todoList.innerHTML = "";
+  list.innerHTML = "";
   let filtered = todos;
 
   // Filter
   if (filter.value === "completed") {
-    filtered = filtered.filter(t => t.completed);
-  } else if (filter.value === "uncompleted") {
-    filtered = filtered.filter(t => !t.completed);
+    filtered = filtered.filter((t) => t.completed);
+  } else if (filter.value === "pending") {
+    filtered = filtered.filter((t) => !t.completed);
   }
 
   // Search
   if (search.value.trim() !== "") {
-    filtered = filtered.filter(t => t.text.toLowerCase().includes(search.value.toLowerCase()));
+    filtered = filtered.filter((t) =>
+      t.text.toLowerCase().includes(search.value.toLowerCase())
+    );
   }
 
+  // Buat elemen todo
   filtered.forEach((todo, index) => {
     const li = document.createElement("li");
     li.className = `todo-item ${todo.completed ? "completed" : ""}`;
-    li.setAttribute("draggable", "true");
-    li.dataset.index = index;
+    li.draggable = true;
 
-    const span = document.createElement("span");
-    span.className = "text";
-    span.textContent = todo.text;
+    li.innerHTML = `
+      <span class="text">${todo.text}</span>
+      <div class="todo-actions">
+        <button class="toggle">${todo.completed ? "Batal" : "Selesai"}</button>
+        <button class="edit">Ubah</button>
+        <button class="delete">Hapus</button>
+      </div>
+    `;
 
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const toggleBtn = document.createElement("button");
-    toggleBtn.className = "toggle";
-    toggleBtn.textContent = todo.completed ? "Belum" : "Selesai";
-    toggleBtn.onclick = () => {
-      todo.completed = !todo.completed;
+    // Toggle selesai/belum
+    li.querySelector(".toggle").addEventListener("click", () => {
+      todos[index].completed = !todos[index].completed;
       saveTodos();
-      renderTodos();
-    };
+    });
 
-    const editBtn = document.createElement("button");
-    editBtn.className = "edit";
-    editBtn.textContent = "Edit";
-    editBtn.onclick = () => {
-      const newText = prompt("Edit todo:", todo.text);
-      if (newText && !todos.some(t => t.text === newText && t !== todo)) {
-        todo.text = newText;
+    // Edit todo
+    li.querySelector(".edit").addEventListener("click", () => {
+      const newText = prompt("Ubah todo:", todo.text);
+      if (newText && !todos.find((t) => t.text === newText)) {
+        todos[index].text = newText;
         saveTodos();
-        renderTodos();
-      } else if (newText) {
-        alert("Judul todo sudah ada!");
+      } else {
+        alert("Judul sudah ada atau kosong!");
       }
-    };
+    });
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.className = "delete";
-    deleteBtn.textContent = "Hapus";
-    deleteBtn.onclick = () => {
+    // Hapus todo
+    li.querySelector(".delete").addEventListener("click", () => {
       todos.splice(index, 1);
       saveTodos();
-      renderTodos();
-    };
+    });
 
-    actions.append(toggleBtn, editBtn, deleteBtn);
-    li.append(span, actions);
-    todoList.appendChild(li);
+    // Drag & Drop
+    li.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("index", index);
+    });
+    li.addEventListener("dragover", (e) => e.preventDefault());
+    li.addEventListener("drop", (e) => {
+      const fromIndex = e.dataTransfer.getData("index");
+      const toIndex = index;
+      const [moved] = todos.splice(fromIndex, 1);
+      todos.splice(toIndex, 0, moved);
+      saveTodos();
+    });
+
+    list.appendChild(li);
   });
+}
 
-  enableDragDrop();
+// Simpan ke localStorage + render
+function saveTodos() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+  renderTodos();
 }
 
 // Tambah todo
-function addTodo() {
-  const text = todoInput.value.trim();
-  if (text === "") return;
-  if (todos.some(t => t.text === text)) {
-    alert("Judul todo sudah ada!");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = input.value.trim();
+
+  if (!text) {
+    alert("Isi dulu todo-nya!");
     return;
   }
-  todos.push({ text, completed: false });
-  saveTodos();
-  renderTodos();
-  todoInput.value = "";
-}
-
-// Event: tombol Tambah
-addBtn.addEventListener("click", addTodo);
-
-// Event: tekan Enter di input
-todoInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    addTodo();
+  if (todos.find((t) => t.text === text)) {
+    alert("Todo dengan judul ini sudah ada!");
+    return;
   }
+
+  todos.push({ text, completed: false });
+  input.value = ""; // Kosongkan input setelah tambah
+  saveTodos(); // langsung render + simpan
 });
 
-// Event filter dan search
+// Event filter & search
 filter.addEventListener("change", renderTodos);
 search.addEventListener("input", renderTodos);
 
-// Drag & Drop
-function enableDragDrop() {
-  const items = document.querySelectorAll(".todo-item");
-  let dragged;
-
-  items.forEach(item => {
-    item.addEventListener("dragstart", () => {
-      dragged = item;
-      item.style.opacity = "0.5";
-    });
-
-    item.addEventListener("dragend", () => {
-      dragged.style.opacity = "1";
-      saveTodos();
-      renderTodos();
-    });
-
-    item.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      const bounding = item.getBoundingClientRect();
-      const offset = bounding.y + bounding.height / 2;
-      if (e.clientY - offset > 0) {
-        item.style["border-bottom"] = "3px solid #4CAF50";
-        item.style["border-top"] = "";
-      } else {
-        item.style["border-top"] = "3px solid #4CAF50";
-        item.style["border-bottom"] = "";
-      }
-    });
-
-    item.addEventListener("dragleave", () => {
-      item.style["border-bottom"] = "";
-      item.style["border-top"] = "";
-    });
-
-    item.addEventListener("drop", (e) => {
-      e.preventDefault();
-      item.style["border-bottom"] = "";
-      item.style["border-top"] = "";
-
-      const draggedIndex = +dragged.dataset.index;
-      const targetIndex = +item.dataset.index;
-
-      const draggedItem = todos[draggedIndex];
-      todos.splice(draggedIndex, 1);
-      todos.splice(targetIndex, 0, draggedItem);
-
-      saveTodos();
-      renderTodos();
-    });
-  });
-}
-
-// Load awal
+// Pertama kali load
 renderTodos();
