@@ -6,9 +6,9 @@
 }
 
 body {
-  background: #eafffd;
+  background: #acc8e5;
   font-family: "Poppins", sans-serif;
-  color: #000000;
+  color: #112a46;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #2a9d8f, #287271, #264653);
-  color: white;
+  background-color: #e2f0ff;
+  color: #000000;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -47,7 +47,7 @@ header h1 {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid #000000;
   object-fit: cover;
 }
 
@@ -82,7 +82,7 @@ main {
 
 #todo-form button {
   padding: 0.8rem 1.2rem;
-  background: #2a9d8f;
+  background: #005137;
   border: none;
   color: white;
   border-radius: 10px;
@@ -91,7 +91,7 @@ main {
 }
 
 #todo-form button:hover {
-  background: #21867a;
+  background: #003b29;
 }
 
 /* Controls */
@@ -146,7 +146,7 @@ main {
 }
 
 .todo-actions .edit {
-  color: #000000; /* Menambah kontras */
+  color: #112a46; /* Menambah kontras */
   background: #e9c46a;
 }
 .todo-actions .delete {
@@ -154,8 +154,8 @@ main {
   color: white;
 }
 .todo-actions .toggle {
-  color: #000000; /* Menambah kontras */
-  background: #2a9d8f;
+  color: #f0dada;
+  background: #00443c;
 }
 
 .todo-actions button:hover {
@@ -164,13 +164,8 @@ main {
 
 /* Footer */
 footer {
-  background: linear-gradient(
-    135deg,
-    #2a9d8f,
-    #287271,
-    #264653
-  ); /* Menyamakan dengan header */
-  color: #f6f8fa; /* Warna terang dari latar belakang body */
+  background-color: #e2f0ff;
+  color: #000000;
   text-align: center;
   padding: 2rem 1rem;
   margin-top: auto; /* Mendorong footer ke bawah */
@@ -198,7 +193,7 @@ footer {
 }
 
 .footer-links a {
-  color: #f6f8fa;
+  color: #000000;
   text-decoration: none;
   transition: color 0.3s ease;
 }
