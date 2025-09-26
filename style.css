@@ -17,17 +17,38 @@ body {
 
 /* Header */
 header {
-  text-align: center;
-  padding: 2rem 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
   background: linear-gradient(135deg, #2a9d8f, #287271, #264653);
   color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
 
+.header-main {
+  text-align: center;
+  flex-grow: 1;
+}
+
 header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
 }
 
 /* Main Content */
